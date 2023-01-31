@@ -22,6 +22,8 @@ char	*get_next_line(int fd)
 
 	i = 0;
 	qchar = 0;
+	if (!fd || fd < 0)
+		return (NULL);
 	leitura = read(fd, &c, 1);
 	while (leitura > 0)
 	{
@@ -33,9 +35,13 @@ char	*get_next_line(int fd)
 			i = 0;
 		leitura = read(fd, &c, 1);
 	}
+	if (leitura <= 0)
+		return (NULL);
 	line = (char *)malloc(qchar + 1);
 	if (!line)
 		return (NULL);
 	buffer_to_str(i, qchar, line, buffer);
+	if (verifie_si_vide(line, qchar) == NULL)
+		free(line);
 	return (verifie_si_vide(line, qchar));
 }

@@ -13,15 +13,15 @@
 
 char	*verifie_si_vide(char *t, int dernier_ligne)
 {
+	if (dernier_ligne == 0)
+		dernier_ligne = 1;
 	if (t[0] == '\0')
 	{
 		free(t);
 		return (NULL);
 	}
-	else
-	{
-		t[dernier_ligne] = '\0';
-	}
+	else if (t[dernier_ligne] != '\n')
+		t[dernier_ligne] = '\n';
 	return (t);
 }
 
