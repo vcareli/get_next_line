@@ -6,40 +6,62 @@
 /*   By: vinvieir <vinvieir@student.42quebec.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:44:43 by vinvieir          #+#    #+#             */
-/*   Updated: 2023/01/30 14:13:35 by vinvieir         ###   ########.fr       */
+/*   Updated: 2023/01/31 14:13:35 by vinvieir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-char	*verifie_si_vide(char *t, int dernier_ligne)
+char	*ft_strchr(const char *str, int c)
 {
-	if (dernier_ligne == 0)
-		dernier_ligne = 1;
-	if (t[0] == '\0')
-	{
-		free(t);
-		return (NULL);
-	}
-	else if (t[dernier_ligne] != '\n')
-		t[dernier_ligne] = '\n';
-	return (t);
+	while (*str != (unsigned char)c)
+		if (!*str++)
+			return (0);
+	return ((char *)str);
 }
 
-void	buffer_to_str(int index, int qtd_char, char *str, char *buff)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		buffere;
-	int		buffers;
-	int		linei;
+	char	*ret;
+	char	*tmp;
+	size_t	i;
 
-	linei = 0;
-	buffers = index - qtd_char % BUFFER_SIZE;
-	buffere = index;
-	if (buffers < 0)
-		buffers += BUFFER_SIZE;
-	while (buffers != buffere)
-	{
-		str[linei++] = buff[buffers++];
-		if (buffers == BUFFER_SIZE)
-			buffers = 0;
-	}
+	ret = malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (0);
+	tmp = (char *)s + start;
+	i = 0;
+	while (*tmp && i < len)
+		ret[i++] = *tmp++;
+	ret[i] = 0;
+	return (ret);
+	free(ret);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	total;
+
+	total = 0;
+	while (str[total])
+		total++;
+	return (total);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	char	*ret;
+	size_t	len;
+
+	len = ft_strlen(s1) + ft_strlen(s2);
+	ret = malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (0);
+	i = 0;
+	while (*s1)
+		ret[i++] = *s1++;
+	while (*s2)
+		ret[i++] = *s2++;
+	ret[i] = 0;
+	return (ret);
 }

@@ -21,7 +21,9 @@
 # include <stddef.h>
 
 char	*get_next_line(int fd);
-char	*verifie_si_vide(char *t, int dernier_ligne);
-void	buffer_to_str(int index, int qtd_char, char *str, char *buff);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *str, int c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t	ft_strlen(const char *str);
 
 #endif
