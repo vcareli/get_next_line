@@ -12,10 +12,13 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 1024
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stddef.h>
 
 char	*get_next_line(int fd);
 char	*verifie_si_vide(char *t, int dernier_ligne);
