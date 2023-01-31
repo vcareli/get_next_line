@@ -21,7 +21,7 @@ static void	buffer_to_str(int fd, char **str, char *buff)
 		lecture = read(fd, buff, BUFFER_SIZE);
 		while (lecture > 0)
 		{
-			buff[lecture] = 0;
+			buff[lecture] = '\0';
 			if (!*str)
 				*str = ft_substr(buff, 0, lecture);
 			else
