@@ -11,71 +11,41 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-static void	buffer_to_str(int fd, char **str, char *buff)
+char	*ft_buffer_to_char(int fd, char *left_str)
 {
-	int		lecture;
-	char	*aux;
+	char	*buff;
+	int		aux_read;
 
-	if (!*str || !ft_strchr(*str, '\n'))
+	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+		return (NULL);
+	aux_read = 1;
+	while (!ft_strchr(left_str, '\n') && aux_read != 0)
 	{
-		lecture = read(fd, buff, BUFFER_SIZE);
-		while (lecture > 0)
+		aux_read = read(fd, buff, BUFFER_SIZE);
+		if (aux_read == -1)
 		{
-			buff[lecture] = '\0';
-			if (!*str)
-				*str = ft_substr(buff, 0, lecture);
-			else
-			{
-				aux = *str;
-				*str = ft_strjoin(*str, buff);
-				free(aux);
-			}
-			if (ft_strchr(buff, '\n'))
-				break ;
-			lecture = read(fd, buff, BUFFER_SIZE);
+			free(buff);
+			return (NULL);
 		}
+		buff[aux_read] = '\0';
+		left_str = ft_strjoin(left_str, buff);
 	}
 	free(buff);
-}
-
-static char	*retour_ligne(char **str)
-{
-	int		i;
-	int		j;
-	char	*ligne_ret;
-	char	*aux;
-
-	if (!*str)
-		return (NULL);
-	if (!ft_strchr(*str, '\n'))
-	{
-		ligne_ret = ft_substr(*str, 0, ft_strlen(*str));
-		free(*str);
-		*str = 0;
-		return (ligne_ret);
-	}
-	i = ft_strlen(*str);
-	j = ft_strlen(ft_strchr(*str, '\n'));
-	ligne_ret = ft_substr(*str, 0, i - j + 1);
-	aux = *str;
-	*str = ft_substr(ft_strchr(*str, '\n'), 1, j - 1);
-	free(aux);
-	return (ligne_ret);
+	return (left_str);
 }
 
 char	*get_next_line(int fd)
 {
-	char			*buffer;
-	static char		*line;
+	char		*line;
+	static char	*lecture;
 
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	lecture = ft_buffer_to_char(fd, lecture);
+	if (!lecture)
 		return (NULL);
-	if (!fd || fd < 0 || BUFFER_SIZE < 1 || read(fd, &buffer, 0) == -1)
-	{
-		free(buffer);
-		return (NULL);
-	}
-	buffer_to_str(fd, &line, buffer);
-	return (retour_ligne(&line));
+	line = ft_get_line(lecture);
+	lecture = ft_nstr(lecture);
+	return (line);
 }

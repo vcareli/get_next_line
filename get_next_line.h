@@ -21,9 +21,11 @@
 # include <stddef.h>
 
 char	*get_next_line(int fd);
-char	*ft_strchr(const char *s, int c);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *s);
+char	*ft_read_to_left_str(int fd, char *left_str);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin(char *left_str, char *buff);
+char	*ft_get_line(char *left_str);
+char	*ft_nstr(char *left_str);
+size_t	ft_strlen(char *s);
 
 #endif
