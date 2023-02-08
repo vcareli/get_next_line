@@ -26,6 +26,7 @@ char	*ft_buffer_to_char(int fd, char *left_str)
 		if (aux_read == -1)
 		{
 			free(buff);
+			free(left_str);
 			return (NULL);
 		}
 		buff[aux_read] = '\0';
