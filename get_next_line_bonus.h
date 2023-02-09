@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
-# include <limits.h>
 
 char	*get_next_line(int fd);
 char	*ft_read_to_left_str(int fd, char *left_str);
